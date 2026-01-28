@@ -74,13 +74,6 @@ export default function Navbar() {
           {/* 桌面端导航菜单 */}
           <div className="hidden md:flex items-center space-x-4 ml-auto">
             <Link
-              href="#tools"
-              className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
-            >
-              <Wrench size={16} />
-              工具箱
-            </Link>
-            <Link
               href="#projects"
               className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
             >
@@ -109,14 +102,6 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              <Link
-                href="#tools"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Wrench size={16} />
-                工具箱
-              </Link>
               <Link
                 href="#projects"
                 className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors py-2"

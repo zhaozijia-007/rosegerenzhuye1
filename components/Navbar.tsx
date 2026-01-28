@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Wrench, Briefcase, User } from "lucide-react";
+import { Wrench, Briefcase, User, Menu, X } from "lucide-react";
 import {
   subscribeToThemeChanges,
   getThemeColors,
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [themeColors, setThemeColors] = useState(
     getThemeColors("silicon-valley"),
   );
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // 订阅主题变化并初始化状态
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 py-4 px-4"
+      className="sticky top-0 py-4 px-4 z-50"
       style={{
         backgroundColor: navbarStyle.backgroundColor,
         borderBottom: `1px solid ${navbarStyle.borderColor}`,
@@ -54,7 +55,7 @@ export default function Navbar() {
         backdropFilter: navbarStyle.backdropFilter,
       }}
     >
-      <div className="container">
+      <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 text-xl font-bold">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200">
@@ -65,8 +66,12 @@ export default function Navbar() {
                 loading="lazy"
               />
             </div>
-            <span style={{ color: "#000000" }}>赵子嘉的个人主页</span>
+            <span className="text-sm md:text-xl" style={{ color: "#000000" }}>
+              赵子嘉的个人主页
+            </span>
           </Link>
+
+          {/* 桌面端导航菜单 */}
           <div className="hidden md:flex items-center space-x-4 ml-auto">
             <Link
               href="#tools"
@@ -90,7 +95,47 @@ export default function Navbar() {
               经历
             </Link>
           </div>
+
+          {/* 移动端汉堡菜单按钮 */}
+          <button
+            className="md:hidden text-gray-600 hover:text-blue-600 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* 移动端导航菜单 */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 py-4 border-t border-gray-200">
+            <div className="flex flex-col space-y-4">
+              <Link
+                href="#tools"
+                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Wrench size={16} />
+                工具箱
+              </Link>
+              <Link
+                href="#projects"
+                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Briefcase size={16} />
+                项目
+              </Link>
+              <Link
+                href="#experience"
+                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <User size={16} />
+                经历
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

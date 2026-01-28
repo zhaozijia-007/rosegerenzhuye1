@@ -48,19 +48,21 @@ export default function Hero() {
           </div>
           <div className="text-left">
             <h1
-              className="text-5xl md:text-6xl font-bold mb-3"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3"
               style={{ color: themeColors.primary }}
             >
               {PERSONAL_INFO.name}
             </h1>
             <p
-              className="text-xl mb-4"
+              className="text-base sm:text-lg md:text-xl mb-4"
               style={{ color: themeColors.textSecondary }}
             >
               {PERSONAL_INFO.title}
             </p>
-            <p className="text-lg mb-6 max-w-2xl">{PERSONAL_INFO.bio}</p>
-            <div className="flex space-x-6">
+            <p className="text-sm sm:text-base md:text-lg mb-6 max-w-2xl">
+              {PERSONAL_INFO.bio}
+            </p>
+            <div className="flex space-x-4 sm:space-x-6">
               <div className="relative group">
                 <a
                   href="#"

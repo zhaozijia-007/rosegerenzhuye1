@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface Message {
   id: string;
@@ -13,17 +13,17 @@ const ChatBot: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
-      content: '你好！我是 Rose 的数字分身，有什么可以帮助你的吗？',
+      id: "1",
+      content: "你好！我是 Rose 的数字分身，有什么可以帮助你的吗？",
       isUser: false,
     },
   ]);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSendMessage = async () => {
-    if (inputText.trim() === '') return;
+    if (inputText.trim() === "") return;
 
     const newUserMessage: Message = {
       id: Date.now().toString(),
@@ -32,25 +32,25 @@ const ChatBot: React.FC = () => {
     };
 
     setMessages((prev) => [...prev, newUserMessage]);
-    setInputText('');
+    setInputText("");
     setError(null);
     setIsLoading(true);
 
     try {
       // 调用后端 API
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           messages: [
-            ...messages.map(msg => ({
-              role: msg.isUser ? 'user' : 'assistant',
+            ...messages.map((msg) => ({
+              role: msg.isUser ? "user" : "assistant",
               content: msg.content,
             })),
             {
-              role: 'user',
+              role: "user",
               content: inputText.trim(),
             },
           ],
@@ -58,7 +58,7 @@ const ChatBot: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response from server');
+        throw new Error("Failed to get response from server");
       }
 
       const data = await response.json();
@@ -71,13 +71,13 @@ const ChatBot: React.FC = () => {
 
       setMessages((prev) => [...prev, aiResponse]);
     } catch (err) {
-      console.error('Error sending message:', err);
-      setError('无法获取 AI 回复，请稍后再试');
+      console.error("Error sending message:", err);
+      setError("无法获取 AI 回复，请稍后再试");
       
       // 添加错误提示消息
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
-        content: '抱歉，我暂时无法回复你的消息。请稍后再试。',
+        content: "抱歉，我暂时无法回复你的消息。请稍后再试。",
         isUser: false,
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -123,7 +123,7 @@ const ChatBot: React.FC = () => {
       <button
         onClick={handleToggleChat}
         className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500/70 to-indigo-500/70 text-white flex items-center justify-center shadow-lg hover:from-purple-600/80 hover:to-indigo-600/80 transition-all duration-300 hover:scale-110 hover:rotate-5 active:scale-95"
-        aria-label={isOpen ? '关闭聊天' : '打开聊天'}
+        aria-label={isOpen ? "关闭聊天" : "打开聊天"}
       >
         <img src="/images/avatar.png" alt="Rose" className="w-12 h-12 rounded-full object-cover" />
       </button>

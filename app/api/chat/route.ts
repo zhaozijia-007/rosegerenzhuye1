@@ -1,19 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getKnowledgeBase } from '@/data/knowledgeBase';
+import { NextRequest, NextResponse } from "next/server";
+import { getKnowledgeBase } from "@/data/knowledgeBase";
 
 export async function POST(request: NextRequest) {
   try {
     // 检查环境变量
-    console.log('DEEPSEEK_API_KEY loaded:', !!process.env.DEEPSEEK_API_KEY);
-    console.log('API Key length:', process.env.DEEPSEEK_API_KEY?.length);
+    console.log("DEEPSEEK_API_KEY loaded:", !!process.env.DEEPSEEK_API_KEY);
+    console.log("API Key length:", process.env.DEEPSEEK_API_KEY?.length);
 
     const { messages } = await request.json();
 
     // 获取知识库内容
     const knowledgeBase = getKnowledgeBase();
     const knowledgeContent = knowledgeBase
-      .map(item => `${item.title}: ${item.content}`)
-      .join('\n');
+      .map((item) => `${item.title}: ${item.content}`)
+      .join("\n");
 
     // 构建系统提示，包含知识库内容
     const systemPrompt = `角色设定：你是《银魂》里的神乐 (Kagura)。
@@ -36,27 +36,27 @@ export async function POST(request: NextRequest) {
 项目知识库：
 ${knowledgeContent}`;
 
-    console.log('Calling DeepSeek API with model:', 'deepseek-chat');
-    console.log('Number of messages:', messages.length);
+    console.log("Calling DeepSeek API with model:", "deepseek-chat");
+    console.log("Number of messages:", messages.length);
 
-    console.log('Starting API call to DeepSeek...');
-    console.log('API Key exists:', !!process.env.DEEPSEEK_API_KEY);
-    console.log('API Key length:', process.env.DEEPSEEK_API_KEY?.length);
-    console.log('Request URL:', 'https://api.deepseek.com/v1/chat/completions');
+    console.log("Starting API call to DeepSeek...");
+    console.log("API Key exists:", !!process.env.DEEPSEEK_API_KEY);
+    console.log("API Key length:", process.env.DEEPSEEK_API_KEY?.length);
+    console.log("Request URL:", "https://api.deepseek.com/v1/chat/completions");
 
     // 直接使用 fetch 调用 DeepSeek API
     let response;
     try {
-      response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-        method: 'POST',
+      response = await fetch("https://api.deepseek.com/v1/chat/completions", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: "deepseek-chat",
           messages: [
-            { role: 'system', content: systemPrompt },
+            { role: "system", content: systemPrompt },
             ...messages,
           ],
           temperature: 0.7,
@@ -64,38 +64,38 @@ ${knowledgeContent}`;
         }),
       });
 
-      console.log('API Response status:', response.status);
-      console.log('API Response status text:', response.statusText);
-      console.log('API Response headers:', Object.fromEntries(response.headers));
+      console.log("API Response status:", response.status);
+      console.log("API Response status text:", response.statusText);
+      console.log("API Response headers:", Object.fromEntries(response.headers));
 
       if (!response.ok) {
         try {
           const errorData = await response.json();
-          console.error('API Error data:', errorData);
-          throw new Error(`API returned status ${response.status}: ${JSON.stringify(errorData)}`);
+          console.error("API Error data:", errorData);
+          throw new Error(`Failed to get response from server`);
         } catch (jsonError) {
-          console.error('Failed to parse error response:', jsonError);
-          const errorText = await response.text().catch(() => '');
-          console.error('API Error text:', errorText);
-          throw new Error(`API returned status ${response.status}: ${errorText || 'Unknown error'}`);
+          console.error("Failed to parse error response:", jsonError);
+          const errorText = await response.text().catch(() => "");
+          console.error("API Error text:", errorText);
+          throw new Error(`API returned status ${response.status}: ${errorText || "Unknown error"}`);
         }
       }
     } catch (networkError) {
-      console.error('Network error when calling API:', networkError);
+      console.error("Network error when calling API:", networkError);
       throw new Error(`Network error: ${String(networkError)}`);
     }
 
     const data = await response.json();
-    console.log('API Response received:', data.choices[0].message.content.substring(0, 50) + '...');
+    console.log("API Response received:", data.choices[0].message.content.substring(0, 50) + "...");
 
     return NextResponse.json({
       message: data.choices[0].message.content,
     });
   } catch (error) {
-    console.error('Error calling DeepSeek API:', error);
-    console.error('Error details:', JSON.stringify(error, null, 2));
+    console.error("Error calling DeepSeek API:", error);
+    console.error("Error details:", JSON.stringify(error, null, 2));
     return NextResponse.json(
-      { error: 'Failed to get response from AI', details: String(error) },
+      { error: "Failed to get response from AI", details: String(error) },
       { status: 500 }
     );
   }

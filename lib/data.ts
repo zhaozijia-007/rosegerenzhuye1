@@ -63,6 +63,14 @@ export const PROJECTS = [
   },
   {
     id: 3,
+    title: "加班倒计时",
+    description:
+      "帮助用户精准计算下班时间，对抗万恶的资本家，让用户能够光速回家的神器应用。",
+    techStack: ["React", "前端开发", "实时计算", "用户体验优化"],
+    url: "https://n3lohscdye.feishu.cn/wiki/LBxdw1q7XiKOVCkWIowcwmDBn8c?from=from_copylink",
+  },
+  {
+    id: 4,
     title: "HRX 核心系统",
     description:
       "主导集团级 HR 核心产品线（涵盖组织、人事、绩效、干部管理等）的规划与设计，实现从单体应用向平台化架构的转型。",

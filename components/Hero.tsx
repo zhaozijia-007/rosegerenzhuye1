@@ -40,8 +40,8 @@ export default function Hero() {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-5">
           <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-200">
             <img
-              src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Anime%20style%20portrait%20of%20a%20young%20woman%20with%20black%20hair%20and%20bangs%2C%20wearing%20a%20maroon%20and%20yellow%20scarf%20and%20black%20jacket%2C%20friendly%20smile%2C%20big%20sparkling%20eyes%2C%20manga%20art%20style%2C%20clean%20lines%2C%20colorful&image_size=portrait_4_3"
-              alt="Anime Avatar"
+              src="/images/avatar.png"
+              alt="Rose"
               className="w-full h-full object-cover"
               loading="lazy"
             />

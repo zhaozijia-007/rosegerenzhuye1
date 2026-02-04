@@ -55,10 +55,7 @@ ${knowledgeContent}`;
         },
         body: JSON.stringify({
           model: "deepseek-chat",
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...messages,
-          ],
+          messages: [{ role: "system", content: systemPrompt }, ...messages],
           temperature: 0.7,
           max_tokens: 500,
         }),
@@ -66,7 +63,10 @@ ${knowledgeContent}`;
 
       console.log("API Response status:", response.status);
       console.log("API Response status text:", response.statusText);
-      console.log("API Response headers:", Object.fromEntries(response.headers));
+      console.log(
+        "API Response headers:",
+        Object.fromEntries(response.headers)
+      );
 
       if (!response.ok) {
         try {
@@ -77,7 +77,9 @@ ${knowledgeContent}`;
           console.error("Failed to parse error response:", jsonError);
           const errorText = await response.text().catch(() => "");
           console.error("API Error text:", errorText);
-          throw new Error(`API returned status ${response.status}: ${errorText || "Unknown error"}`);
+          throw new Error(
+            `API returned status ${response.status}: ${errorText || "Unknown error"}`
+          );
         }
       }
     } catch (networkError) {
@@ -86,7 +88,10 @@ ${knowledgeContent}`;
     }
 
     const data = await response.json();
-    console.log("API Response received:", data.choices[0].message.content.substring(0, 50) + "...");
+    console.log(
+      "API Response received:",
+      data.choices[0].message.content.substring(0, 50) + "..."
+    );
 
     return NextResponse.json({
       message: data.choices[0].message.content,

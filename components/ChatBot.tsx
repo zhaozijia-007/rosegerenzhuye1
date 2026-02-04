@@ -73,7 +73,7 @@ const ChatBot: React.FC = () => {
     } catch (err) {
       console.error("Error sending message:", err);
       setError("无法获取 AI 回复，请稍后再试");
-      
+
       // 添加错误提示消息
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
@@ -197,10 +197,11 @@ const ChatBot: React.FC = () => {
                   />
                 )}
                 <div
-                  className={`max-w-[80%] px-4 py-2 shadow-sm ${message.isUser
-                    ? "bg-black text-white rounded-2xl rounded-tr-none"
-                    : "bg-gray-100 text-gray-800 rounded-2xl rounded-tl-none"
-                    }`}
+                  className={`max-w-[80%] px-4 py-2 shadow-sm ${
+                    message.isUser
+                      ? "bg-black text-white rounded-2xl rounded-tr-none"
+                      : "bg-gray-100 text-gray-800 rounded-2xl rounded-tl-none"
+                  }`}
                 >
                   {message.content}
                 </div>
@@ -242,8 +243,14 @@ const ChatBot: React.FC = () => {
                 <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-2xl rounded-tl-none shadow-sm">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                    <div
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.2s" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                      style={{ animationDelay: "0.4s" }}
+                    ></div>
                   </div>
                 </div>
               </div>

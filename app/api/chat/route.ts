@@ -65,7 +65,7 @@ ${knowledgeContent}`;
       console.log("API Response status text:", response.statusText);
       console.log(
         "API Response headers:",
-        Object.fromEntries(response.headers)
+        Object.fromEntries(response.headers),
       );
 
       if (!response.ok) {
@@ -78,7 +78,7 @@ ${knowledgeContent}`;
           const errorText = await response.text().catch(() => "");
           console.error("API Error text:", errorText);
           throw new Error(
-            `API returned status ${response.status}: ${errorText || "Unknown error"}`
+            `API returned status ${response.status}: ${errorText || "Unknown error"}`,
           );
         }
       }
@@ -90,7 +90,7 @@ ${knowledgeContent}`;
     const data = await response.json();
     console.log(
       "API Response received:",
-      data.choices[0].message.content.substring(0, 50) + "..."
+      data.choices[0].message.content.substring(0, 50) + "...",
     );
 
     return NextResponse.json({
@@ -101,7 +101,7 @@ ${knowledgeContent}`;
     console.error("Error details:", JSON.stringify(error, null, 2));
     return NextResponse.json(
       { error: "Failed to get response from AI", details: String(error) },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

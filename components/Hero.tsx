@@ -20,17 +20,19 @@ export default function Hero() {
 
   // 订阅主题变化并初始化状态
   useEffect(() => {
-    // 初始化状态
-    const initialTheme = getCurrentTheme();
-    setCurrentTheme(initialTheme);
-    setThemeColors(getThemeColors(initialTheme));
+    // 只在客户端运行，避免水合错误
+    if (typeof window !== 'undefined') {
+      const initialTheme = getCurrentTheme();
+      setCurrentTheme(initialTheme);
+      setThemeColors(getThemeColors(initialTheme));
 
-    const unsubscribe = subscribeToThemeChanges((theme) => {
-      setCurrentTheme(theme);
-      setThemeColors(getThemeColors(theme));
-    });
+      const unsubscribe = subscribeToThemeChanges((theme) => {
+        setCurrentTheme(theme);
+        setThemeColors(getThemeColors(theme));
+      });
 
-    return unsubscribe;
+      return unsubscribe;
+    }
   }, []);
 
   // 只渲染硅谷风 Hero 区域
